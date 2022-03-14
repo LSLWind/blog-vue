@@ -6,7 +6,7 @@ import App from './App.vue'
 //路由
 import {router} from './router'
 const app = createApp(App)
-//vue3 注册全局指令
+//vue3 注册全局指令，title-标签标题title为自定义
 app.directive('title',  function (el) {
     document.title = el.dataset.title
 })
