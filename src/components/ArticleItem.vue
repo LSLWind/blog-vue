@@ -2,30 +2,30 @@
   <el-card class="me-area" :body-style="{ padding: '16px' }">
     <div class="me-article-header">
 
-      <a @click="view(id)" class="me-article-title">{{'id'}}</a>
+      <a @click="view(id)" class="me-article-title">{{title}}</a>
       <el-button class="me-article-icon" type="text">置顶</el-button>
       <span class="me-pull-right me-article-count">
         <i class="me-icon-comment"></i>
-        {{'commentCounts'}}
+        {{comments}}
       </span>
 
       <span class="me-pull-right me-article-count">
-        <i class="el-icon-view"></i>&nbsp;{{'viewCounts'}}
+        <i class="el-icon-view"></i>&nbsp;{{views}}
       </span>
     </div>
 
     <div class="me-artile-description">
-      {{'summary'}}
+      {{desc}}
     </div>
     <div class="me-article-footer">
       <span class="me-article-author">
-        <i class="me-icon-author"></i>&nbsp;{{'author.nickname'}}
+        <i class="me-icon-author"></i>&nbsp;{{author}}
       </span>
 
       <el-tag v-for="t in tags" :key="t.tagname" size="mini" type="success">{{'t.tagname'}}</el-tag>
 
       <span class="me-pull-right me-article-count">
-        <i class="el-icon-time"></i>&nbsp;{{'createDate | format'}}
+        <i class="el-icon-time"></i>&nbsp;{{updateDate}}
       </span>
 
     </div>
@@ -38,14 +38,20 @@ export default {
   name: 'ArticleItem',
   props: {
     id: Number,
-    // weight: Number,
-    // title: String,
-    // commentCounts: Number,
-    // viewCounts: Number,
-    // summary: String,
-    // author: Object,
-    // tags: Array,
-    // createDate: String
+    title: String,
+    keyword:String,
+    author:String,
+    desc:String,
+    numbers:Number,
+    imgUrl:String,
+    type:Number,
+    category:String,
+    views:Number,
+    comments:Number,
+    likes:Number,
+    tags:String,
+    createDate: String,
+    updateDate:String,
   },
   data() {
     return {}
