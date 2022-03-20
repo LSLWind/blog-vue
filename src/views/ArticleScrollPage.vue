@@ -1,6 +1,11 @@
 <template>
+  <div v-title :data-title="title">
 
-    <article-item v-for="article in articles" :key="article.id" v-bind="article"></article-item>
+
+        <article-item v-for="article in articles" :key="article.id" v-bind="article"></article-item>
+
+
+  </div>
 
 </template>
 
@@ -34,6 +39,7 @@ export default {
   },
   data() {
     return {
+      title:"lsl-文章",
       loading: false,
       noData: false,
       //分页数据
@@ -57,7 +63,7 @@ export default {
 
       axios.get("/api/articles/getArticleListByPageAndSize?page=1&pageSize=10").then(data => {
 
-         // data.data是全部json数据
+        // data.data是全部json数据
         let newArticles = data.data.data
 
         if (newArticles && newArticles.length > 0) {

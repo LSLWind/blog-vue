@@ -23,9 +23,10 @@
       </span>
 
       <el-tag v-for="t in tags" :key="t.tagname" size="mini" type="success">{{'t.tagname'}}</el-tag>
+      {{updateTime}}
 
       <span class="me-pull-right me-article-count">
-        <i class="el-icon-time"></i>&nbsp;{{updateDate}}
+        <el-icon><timer />{{updateTime}}</el-icon>
       </span>
 
     </div>
@@ -33,9 +34,12 @@
 </template>
 
 <script>
-
+import {Timer} from '@element-plus/icons-vue'
 export default {
   name: 'ArticleItem',
+  components:{
+    Timer
+  },
   props: {
     id: Number,
     title: String,
@@ -50,8 +54,8 @@ export default {
     comments:Number,
     likes:Number,
     tags:String,
-    createDate: String,
-    updateDate:String,
+    createTime: String,
+    updateTime:String,
   },
   data() {
     return {}
