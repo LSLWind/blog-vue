@@ -34,23 +34,14 @@
           </el-menu>
         </el-col>
         <el-col :span="4">
-          <el-menu :router=true menu-trigger="click" mode="horizontal" active-text-color="#5FB878">
-            <div style="padding-top: 5px">
-              <el-menu-item index="/login">
-                <el-button type="text">后台</el-button>
-              </el-menu-item>
-            </div>
-            <div style="padding-top: 5px">
-              <el-menu-item index="/register">
-                <el-button type="text">统计</el-button>
-              </el-menu-item>
-            </div>
-          </el-menu>
+          <div class="nav-right">
+            <el-button size="small" type="primary" @click="handleClick('login')">后台</el-button>
+            <el-button size="small" type="danger" @click="handleClick('register')">统计</el-button>
+          </div>
         </el-col>
       </el-row>
     </div>
   </div>
-
 
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <transition>
-    <div @click="toTop" v-show="topShow" class="me-to-top">
-      <el-icon :size="40">
+    <div @click="toTop" v-show="topShow" class="el-icon-arrow-up">
+      <el-icon :size="30">
         <caret-top/>
       </el-icon>
     </div>
@@ -50,26 +50,22 @@ export default {
 </script>
 
 <style>
-.me-to-top {
-  background-color: #fff;
+.el-icon-arrow-up {
   position: fixed;
-  right: 100px;
-  bottom: 150px;
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
+  bottom: 50px;
+  right: 40px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: rgb(119, 118, 118);
   cursor: pointer;
-  transition: .3s;
-  box-shadow: 0 0 6px rgba(0, 0, 0, .12);
-  z-index: 5;
+  padding: 15px;
+  color: white;
+  border-radius: 50%;
 }
 
-.me-to-top i {
-  color: #00d1b2;
-  display: block;
-  line-height: 20px;
-  text-align: center;
-  font-size: 18px;
+.el-icon-arrow-up:hover {
+  background-color: #555;
 }
 
 </style>

@@ -19,7 +19,7 @@ BlogHome - ArticleHome - ArticleScrollPage - ScrollPage/ArticleItem
 </template>
 
 <script>
-import BaseFooter from '@/components/BaseFooter'
+import BaseFooter from '@/components/base/BaseFooter'
 import NavTop from "@/components/NavTop";
 
 export default {
