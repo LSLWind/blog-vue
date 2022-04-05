@@ -5,18 +5,15 @@
       <router-view />
     </div>
     <go-top></go-top>
-    <base-footer></base-footer>
   </div>
-
  </template>
 
 <script>
 import GoTop from "@/components/GoTop";
 import NavTop from "@/components/NavTop";
-import BaseFooter from "@/components/base/BaseFooter";
 export default {
   name: 'App',
-  components: {BaseFooter, NavTop, GoTop }
+  components: {NavTop, GoTop }
 }
 </script>
 

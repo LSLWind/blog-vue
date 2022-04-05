@@ -2,7 +2,6 @@
   <div v-title data-title="ForFun Find Yourself">
     <el-container>
       <el-main class="me-articles">
-        <article-scroll-page></article-scroll-page>
 
       </el-main>
 
@@ -19,7 +18,6 @@
 
 <script>
 
-import ArticleScrollPage from "@/views/ArticleScrollPage";
 
 export default {
   name: 'ArticleHome',
@@ -32,7 +30,6 @@ export default {
   },
   methods: {},
   components: {
-    ArticleScrollPage
   }
 }
 </script>

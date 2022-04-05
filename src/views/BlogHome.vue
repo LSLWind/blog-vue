@@ -1,26 +1,21 @@
-<!--
-BlogHome - ArticleHome - ArticleScrollPage - ScrollPage/ArticleItem
--->
 <template>
-  <div id="blogHome">
-    <el-container>
-      <!--base-nav参数，activeIndex，底部显示当前活动导航页-->
-      <base-nav :activeIndex="activeIndex"></base-nav>
+  <el-row :gutter="100">
+    <el-col :span="6">
+      <NavAside/>
+    </el-col>
+    <el-col :span="18">
+      <ArticlePage/>
+    </el-col>
 
-      <router-view class="me-container"/>
-      <router-view name="ArticleHome"/>
-
-      <base-footer v-show="footerShow"></base-footer>
-
-    </el-container>
-
-  </div>
+  </el-row>
 
 </template>
 
 <script>
-import BaseFooter from '@/components/base/BaseFooter'
-import NavTop from "@/components/NavTop";
+
+
+import NavAside from "@/components/NavAside";
+import ArticlePage from "@/views/ArticlePage";
 
 export default {
   name: 'BlogHome',
@@ -31,25 +26,13 @@ export default {
     }
   },
   components: {
-    'base-nav': NavTop,
-    'base-footer': BaseFooter
+    ArticlePage,
+    NavAside
   },
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => {
-  //     vm.activeIndex = to.path
-  //   })
-  // },
-  // beforeRouteUpdate(to, from, next) {
-  //   this.footerShow = to.path === '/';
-  //   this.activeIndex = to.path
-  //   next()
-  // }
+
 }
 </script>
 
-<style>
+<style scoped>
 
-.me-container {
-  margin: 100px auto 140px;
-}
 </style>

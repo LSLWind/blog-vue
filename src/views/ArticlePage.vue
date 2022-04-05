@@ -1,11 +1,8 @@
 <template>
+
   <div v-title :data-title="title">
 
     <div class="left clearfix">
-      <h3
-          v-if="params.tag_id"
-          class="left-title"
-      > 相关的文章：</h3>
       <ul
           class="articles-list"
           id="list"
@@ -20,13 +17,11 @@
                 :href="article.id"
                 target="_blank"
             >
-              <img
-                  class="wrap-img img-blur-done"
-                  :data-src="article.img_url"
-                  data-has-lazy-src="false"
-                  src="../assets/logo.png"
-                  alt="文章封面"
-              />
+              <div class="wrap-img img-blur-done">
+                <TagCloud/>
+              </div>
+
+
               <div class="content">
                 <h4 class="title">{{ article.title }}</h4>
                 <p class="abstract">{{ article.desc }}</p>
@@ -50,29 +45,19 @@
     </div>
 
 
-    <el-aside>
-      <el-card class="box-card">
-        <template #header>
-          <div class="card-header">
-            <span>Card name</span>
-            <el-button class="button" type="text">Operation button</el-button>
-          </div>
-        </template>
-        <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div>
-      </el-card>
-    </el-aside>
-
-
   </div>
 </template>
+
 
 <script>
 
 import axios from "axios";
+import TagCloud from "@/components/base/TagCloud";
+
 
 export default {
   name: "ArticlePage",
-  components: {},
+  components: {TagCloud},
   data() {
     return {
       isLoadEnd: false,
