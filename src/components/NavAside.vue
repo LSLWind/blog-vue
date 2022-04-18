@@ -1,10 +1,5 @@
 <template>
   <div class="right slider">
-    <img
-        class="right-logo"
-        src="../assets/凯尔.jpg"
-        alt=""
-    >
     <div class="title">lsl</div>
     <div class="right-content">
       <div class="item">
@@ -60,6 +55,7 @@
           alt="前端GitHub"
       />
     </div>
+    <ArticleData/>
 
   </div>
 
@@ -68,10 +64,11 @@
 <script>
 
 import axios from "axios";
+import ArticleData from "@/components/datacharts/ArticleData";
 
 export default {
   name: "NavAside",
-  components: {},
+  components: {ArticleData},
   data() {
     return {
       navigations: []
@@ -115,7 +112,8 @@ export default {
   text-align: center;
 
   .right-logo {
-    width: 100px;
+    width: 90px;
+    height: 70px;
     border-radius: 50%;
     animation-iteration-count: infinite;
   }

@@ -1,12 +1,12 @@
 <template>
-  <el-row :gutter="100">
-    <el-col :span="6">
-      <NavAside/>
-    </el-col>
+  <el-row>
+
     <el-col :span="18">
       <ArticlePage/>
     </el-col>
-
+    <el-col :span="6">
+      <NavAside/>
+    </el-col>
   </el-row>
 
 </template>

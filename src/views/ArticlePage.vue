@@ -1,50 +1,65 @@
 <template>
-
   <div v-title :data-title="title">
 
     <div class="left clearfix">
-      <ul
-          class="articles-list"
-          id="list"
-      >
-        <transition-group name="el-fade-in">
-          <li
-              v-for="(article) in articles"
-              :key="article.id"
-              class="item"
+      <el-row :gutter="30">
+        <!--目录导航-->
+        <el-col :span="4">
+          <NavCategory/>
+        </el-col>
+
+        <el-col :span="20">
+
+
+          <ul
+              class="articles-list"
+              id="list"
           >
-            <a
-                :href="article.id"
-                target="_blank"
-            >
-              <div class="wrap-img img-blur-done">
-                <TagCloud/>
-              </div>
+            <transition-group name="el-fade-in">
+              <li
+                  v-for="(article) in articles"
+                  :key="article.id"
+                  class="item"
+              >
+                <a
+                    :href="article.id"
+                    target="_blank"
+                >
+                  <!--              <div class="wrap-img img-blur-done">-->
+                  <!--              </div>-->
 
 
-              <div class="content">
-                <h4 class="title">{{ article.title }}</h4>
-                <p class="abstract">{{ article.desc }}</p>
-                <div class="meta">
-                  <span>查看 {{ article.views }}</span>
-                  <span>评论 {{ article.comments }}</span>
-                  <span>赞 {{ article.likes }}</span>
-                  <span
-                      v-if="article.create_time"
-                      class="time"
-                  >
+                  <div class="content">
+                    <!--面包屑-->
+                    <el-breadcrumb separator="/">
+                      <el-breadcrumb-item :to="{ path: '/' }">{{ article.category }}</el-breadcrumb-item>
+                      <el-breadcrumb-item><a href="/">{{ article.updateTime }}</a></el-breadcrumb-item>
+                      <el-breadcrumb-item>{{ article.numbers }} 字</el-breadcrumb-item>
+                    </el-breadcrumb>
+
+                    <h4 class="title">{{ article.title }}</h4>
+                    <p class="abstract">{{ article.desc }}</p>
+                    <div class="meta">
+                      <span><el-icon :size="15" color="#409EFC"><View/></el-icon> {{ article.views }}</span>
+                      <span><el-icon :size="15" color="#67C23A"><ChatDotRound/></el-icon> {{ article.comments }}</span>
+                      <span><el-icon :size="15" color="#F56C6C"><Star/></el-icon> {{ article.likes }}</span>
+                      <span
+                          v-if="article.create_time"
+                          class="time"
+                      >
                   {{ article.create_time }}
                 </span>
-                </div>
-              </div>
-            </a>
-          </li>
-        </transition-group>
-      </ul>
-      <!--          <LoadingCustom v-if="state.isLoading"></LoadingCustom>-->
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </transition-group>
+          </ul>
+        </el-col>
+
+      </el-row>
+
     </div>
-
-
   </div>
 </template>
 
@@ -52,12 +67,17 @@
 <script>
 
 import axios from "axios";
-import TagCloud from "@/components/base/TagCloud";
-
+import NavCategory from "@/components/base/NavCategory";
+import {View, ChatDotRound, Star} from '@element-plus/icons-vue'
 
 export default {
   name: "ArticlePage",
-  components: {TagCloud},
+  components: {
+    NavCategory,
+    View,
+    ChatDotRound,
+    Star,
+  },
   data() {
     return {
       isLoadEnd: false,
