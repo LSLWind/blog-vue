@@ -1,34 +1,23 @@
 <template>
   <div v-title :data-title="title">
-
     <div class="left clearfix">
       <el-row :gutter="30">
         <!--目录导航-->
-        <el-col :span="4">
+        <el-col :span="5">
           <NavCategory/>
         </el-col>
-
-        <el-col :span="20">
-
-
-          <ul
-              class="articles-list"
-              id="list"
-          >
+        <!--文章列表-->
+        <el-col :span="19">
+          <ul class="articles-list" id="list">
             <transition-group name="el-fade-in">
-              <li
-                  v-for="(article) in articles"
-                  :key="article.id"
-                  class="item"
-              >
-                <a
-                    :href="article.id"
-                    target="_blank"
-                >
-                  <!--              <div class="wrap-img img-blur-done">-->
-                  <!--              </div>-->
+              <li v-for="(article) in articles" :key="article.id" class="item" >
+<!--                <a :href="['http://localhost:3001/articleDetail?article_id='+article.id]" target="_blank">-->
 
-
+                  <router-link  :to="`/articleDetail/${article.id}`" :key="article.id" class="around" >
+                  <!--侧边图片-->
+                  <div class="wrap-img img-blur-done">
+                    <el-image :src="article.imgUrl"/>
+                  </div>
                   <div class="content">
                     <!--面包屑-->
                     <el-breadcrumb separator="/">
@@ -36,36 +25,28 @@
                       <el-breadcrumb-item><a href="/">{{ article.updateTime }}</a></el-breadcrumb-item>
                       <el-breadcrumb-item>{{ article.numbers }} 字</el-breadcrumb-item>
                     </el-breadcrumb>
-
+                    <!--标题与描述-->
                     <h4 class="title">{{ article.title }}</h4>
                     <p class="abstract">{{ article.desc }}</p>
                     <div class="meta">
                       <span><el-icon :size="15" color="#409EFC"><View/></el-icon> {{ article.views }}</span>
                       <span><el-icon :size="15" color="#67C23A"><ChatDotRound/></el-icon> {{ article.comments }}</span>
                       <span><el-icon :size="15" color="#F56C6C"><Star/></el-icon> {{ article.likes }}</span>
-                      <span
-                          v-if="article.create_time"
-                          class="time"
-                      >
-                  {{ article.create_time }}
-                </span>
+                      <span class="time">{{ article.create_time }}</span>
                     </div>
                   </div>
-                </a>
+                  </router-link>
               </li>
             </transition-group>
           </ul>
         </el-col>
-
       </el-row>
-
     </div>
   </div>
+
 </template>
 
-
 <script>
-
 import axios from "axios";
 import NavCategory from "@/components/base/NavCategory";
 import {View, ChatDotRound, Star} from '@element-plus/icons-vue'
@@ -80,10 +61,9 @@ export default {
   },
   data() {
     return {
-      isLoadEnd: false,
-      isLoading: false,
       articles: [],
-      total: 0,
+
+
       loading: false,
       noData: false,
       //分页数据

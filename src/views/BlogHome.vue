@@ -1,6 +1,5 @@
 <template>
   <el-row>
-
     <el-col :span="18">
       <ArticlePage/>
     </el-col>

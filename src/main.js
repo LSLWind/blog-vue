@@ -13,10 +13,24 @@ const app = createApp(App)
 //挂载echart图表
 // app.config.globalProperties.$echarts = echarts
 
+//引入v-md-editor
+import VMdEditor from '@kangc/v-md-editor';
+import '@kangc/v-md-editor/lib/style/base-editor.css';
+import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
+import '@kangc/v-md-editor/lib/theme/style/github.css';
+// highlightjs
+import hljs from 'highlight.js';
+
+VMdEditor.use(githubTheme, {
+    Hljs: hljs,
+});
+
+
 //vue3 注册全局指令，title-标签标题title为自定义
 app.directive('title',  function (el) {
     document.title = el.dataset.title
 })
-app.use(ElementPlus)
-app.use(router)
+app.use(ElementPlus);
+app.use(VMdEditor);
+app.use(router);
 app.mount('#app')
