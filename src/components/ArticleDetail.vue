@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%">
     <div class="article clearfix">
-      <el-container>
+      <el-container id="container">
         <!--文章头信息-->
         <el-header style="height:105px">
           <el-row>
@@ -64,31 +64,31 @@
           <el-col :span="3">
             <el-aside>Aside</el-aside>
           </el-col>
+          <!--中间 文章展示-->
           <el-col :span="17">
             <el-main>
               <div class="content">
-                <v-md-preview v-model="article.content"></v-md-preview>
-
+                <v-md-preview :text="article.content" ref="preview"></v-md-preview>
               </div>
             </el-main>
           </el-col>
           <!--右侧边-目录导航-->
           <el-col :span="4">
-              <el-card shadow="always" style=" position: fixed; width:200px">
-                <template #header>
-                  <div class="card-header">
-                    <span>目录</span>
-
-                  </div>
-                </template>
-                <div class="anchor">
-                  <div class="anchor_tag" v-for="anchor in titles" :key="anchor" @click="handleAnchorClick(anchor)">
-                    {{ anchor }}
-                  </div>
+            <el-card shadow="always" style=" position: fixed; width:200px">
+              <template #header>
+                <div class="card-header">
+                  <span>目录</span>
                 </div>
-              </el-card>
-
-
+              </template>
+              <!--目录导航锚点-->
+              <div>
+                <div v-for="anchor in titles" :key="anchor"
+                     :style="{ padding: `10px 0 10px ${anchor.indent * 20}px` }"
+                     @click="handleAnchorClick(anchor)">
+                  <el-link style="cursor: pointer" type="primary">{{ anchor.title }}</el-link>
+                </div>
+              </div>
+            </el-card>
           </el-col>
         </el-row>
 
@@ -110,10 +110,12 @@ import {Timer, DataAnalysis, View} from '@element-plus/icons-vue'
 
 export default {
   name: "ArticleDetail",
+
+
   data() {
     return {
       article: '',
-      titles: ['azcxxxxxxxxxxx', 'b', 'c'],
+      titles: [],
     }
   },
   components: {
@@ -123,24 +125,62 @@ export default {
     View,
   },
   created() {
-    this.getArticleContent();
   },
 
+// 加载目录，async await配合等待文章获取完毕再渲染
+  async mounted() {
 
+    await this.getArticleContent();
+
+      const anchors = this.$refs.preview.$el.querySelectorAll('h1,h2,h3,h4,h5,h6');
+      const titles = Array.from(anchors).filter((title) => !!title.innerText.trim());
+
+
+      if (!titles.length) {
+        this.titles = [];
+        return;
+      }
+
+      const hTags = Array.from(new Set(titles.map((title) => title.tagName))).sort();
+
+      this.titles = titles.map((el) => ({
+        title: el.innerText,
+        lineIndex: el.getAttribute('data-v-md-line'),
+        indent: hTags.indexOf(el.tagName),
+      }));
+
+  },
 
   methods: {
-    getArticleContent() {
+    // 获取文章内容
+    async getArticleContent() {
       let that = this
       //获取参数里的id
       const id = this.$route.params.id;
       //获取文章内容
-      axios.get('/api/articles/getArticleById?id=' + id).then(res => {
+      await axios.get('/api/articles/getArticleById?id=' + id).then(res => {
         that.article = res.data.data
       }).catch(error => {
         if (error !== 'error') {
           that.$message({type: 'error', message: '文章加载失败!', showClose: true})
         }
       });
+    },
+
+    // 目录锚点点击
+    handleAnchorClick(anchor) {
+      const {preview} = this.$refs;
+      const {lineIndex} = anchor;
+
+      const heading = preview.$el.querySelector(`[data-v-md-line="${lineIndex}"]`);
+
+      if (heading) {
+        preview.scrollToTarget({
+          target: heading,
+          scrollContainer: window,
+          top: 80,
+        });
+      }
     },
 
   },
@@ -152,6 +192,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+
 .cell-item {
   display: flex;
   align-items: center;
@@ -161,32 +203,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.anchor {
-  display: block;
-  position: sticky;
-  top: 213px;
-  margin-top: 213px;
-  border-left: 1px solid #eee;
-
-  .anchor-ul {
-    position: relative;
-    top: 0;
-    max-width: 250px;
-    border: none;
-    -moz-box-shadow: 0 0px 0px #fff;
-    -webkit-box-shadow: 0 0px 0px #fff;
-    box-shadow: 0 0px 0px #fff;
-
-    li.active {
-      color: #009a61;
-    }
-  }
-
-  a {
-    color: #333;
-  }
 }
 
 .article {

@@ -3,6 +3,7 @@ import BlogHome from "@/views/BlogHome";
 import ArticlePage from "@/views/ArticlePage";
 import LogPage from "@/views/LogPage";
 import ArticleDetail from "@/components/ArticleDetail";
+import LslCheckout from "@/components/lsl/LslCheckout";
 // import ArticleHome from "@/views/ArticleHome";
 
 const routes = [
@@ -33,6 +34,12 @@ const routes = [
         path: "/articleDetail/:id",
         name: "articleDetail",
         component: ArticleDetail
+    },
+    //lsl 后台 CURD
+    {
+        path: "/lsl",
+        name: 'LslCheckout',
+        component: LslCheckout
     }
 ]
 

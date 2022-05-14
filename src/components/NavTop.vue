@@ -35,8 +35,8 @@
         </el-col>
         <el-col :span="4">
           <div class="nav-right">
-            <el-button size="small" type="primary" @click="handleClick('login')">后台</el-button>
-            <el-button size="small" type="danger" @click="handleClick('register')">统计</el-button>
+            <el-button size="small" type="primary" @click="toLsl">后台</el-button>
+            <el-button size="small" type="danger" @click="handleClick('statistics')">统计</el-button>
           </div>
         </el-col>
       </el-row>
@@ -47,6 +47,7 @@
 
 <script>
 import {Edit} from '@element-plus/icons-vue'
+import {useRouter} from 'vue-router'
 
 export default {
   name: 'NavTop',
@@ -59,6 +60,20 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  setup() {
+
+    const router = useRouter()
+    const toLsl = (() => {
+      router.push({
+        name: 'LslCheckout'
+      })
+    })
+
+    return {
+      toLsl
+    }
+
   },
   data() {
     return {}
