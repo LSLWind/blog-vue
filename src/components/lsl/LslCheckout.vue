@@ -44,6 +44,7 @@
 
 <script>
 import axios from "axios";
+import {ElMessage} from 'element-plus'
 
 export default {
   name: "LslCheckout",
@@ -82,34 +83,38 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      const that = this;
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.loading = true;
+          that.loading = true;
           //后台校验
           setTimeout(() => {
-            this.loading = false;
+            const params = new URLSearchParams();
+            params.append('name', this.ruleForm.pass);
+            params.append('password', this.ruleForm.checkPass);
             axios({
               method: 'post',
               url: '/api/lsl/check',
-              data: JSON.stringify({
-                "name": this.ruleForm.pass,
-                "password": this.ruleForm.checkPass,
-              }),
+              data: params,
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             }).then(function (res) {
-              alert(res.data.date);
+              //校验成功
+              if (res.data.status === 200) {
+                ElMessage.success('登录成功')
+                that.$router.push('/lsl/home')
+              } else {
+                ElMessage.error('用户名或密码错误')
+              }
+              that.loading = false;
             }).catch(function (error) {
-              alert(error);
+              console.log(error)
             });
           }, 2000);
         } else {
-          console.log("error submit!!");
+          console.log("页面提交错误");
           return false;
         }
       });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
     },
   },
 };
