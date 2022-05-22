@@ -5,6 +5,7 @@ import LogPage from "@/views/LogPage";
 import ArticleDetail from "@/components/ArticleDetail";
 import LslCheckout from "@/components/lsl/LslCheckout";
 import LslHome from "@/components/lsl/LslHome";
+import LslAddArticle from "@/components/lsl/LslAddArticle";
 // import ArticleHome from "@/views/ArticleHome";
 
 const routes = [
@@ -46,7 +47,13 @@ const routes = [
         path: "/lsl/home",
         name: "LslHome",
         component: LslHome
+    },
+    {
+        path: "/lsl/addArticle",
+        name:"LslArticle",
+        component: LslAddArticle
     }
+
 ]
 
 

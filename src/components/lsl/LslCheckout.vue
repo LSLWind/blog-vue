@@ -99,6 +99,9 @@ export default {
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             }).then(function (res) {
               //校验成功
+
+              //TODO 用户名密码校验的安全性、session存储的安全性
+
               if (res.data.status === 200) {
                 ElMessage.success('登录成功')
                 that.$router.push('/lsl/home')
