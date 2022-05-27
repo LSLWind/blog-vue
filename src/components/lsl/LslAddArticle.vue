@@ -1,5 +1,5 @@
 <template>
-  <el-card style="width: 100%" :ref="article">
+  <el-card style="width: 100%" ref="article">
     <!--标题-->
     <template #header>
       <el-input v-model="article.title" placeholder="输入标题"/>
@@ -12,8 +12,7 @@
 
     <el-cascader v-model="article.category" :options="categories"/>
 
-
-    <el-button type="primary">确认</el-button>
+    <el-button type="primary" @click="submitAddArticle">确认</el-button>
 
 
   </el-card>
@@ -30,7 +29,6 @@ export default {
   data() {
     return {
       categories: [],
-      options:[],
 
       //文章
       article: {
@@ -50,6 +48,7 @@ export default {
 
   methods: {
 
+    // 获取目录
     getAllCategories() {
       let that = this
 
@@ -72,16 +71,26 @@ export default {
         }
 
         that.categories = categories
-
-        console.log(that.categories)
-
       }).catch(error => {
         if (error !== 'error') {
           that.$message({type: 'error', message: '目录加载失败!' + error, showClose: true})
         }
       })
-
     },
+
+    // 提交文章
+    submitAddArticle() {
+      const article = this.article
+      console.log(article)
+      //校验内容
+      axios.post('/api/articles/addOneArticle', article).then(
+          res => {
+            console.log(res.data)
+          }
+      );
+    }
+
+
   }
 
 }

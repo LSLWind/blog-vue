@@ -6,14 +6,13 @@
         <el-col :span="5">
           <NavCategory/>
         </el-col>
-        <!--文章列表-->
+        <!--文章列表 设置无限滑动-->
         <el-col :span="19">
-          <ul class="articles-list" id="list">
+          <!--无限滚动-->
+          <ul class="articles-list" id="list" v-infinite-scroll="scrollLoadArticle">
             <transition-group name="el-fade-in">
-              <li v-for="(article) in articles" :key="article.id" class="item" >
-<!--                <a :href="['http://localhost:3001/articleDetail?article_id='+article.id]" target="_blank">-->
-
-                  <router-link  :to="`/articleDetail/${article.id}`" :key="article.id" class="around" >
+              <li v-for="(article) in articles" :key="article.id" class="item">
+                <router-link :to="`/articleDetail/${article.id}`" :key="article.id" class="around">
                   <!--侧边图片-->
                   <div class="wrap-img img-blur-done">
                     <el-image :src="article.imgUrl"/>
@@ -35,8 +34,10 @@
                       <span class="time">{{ article.create_time }}</span>
                     </div>
                   </div>
-                  </router-link>
+                </router-link>
               </li>
+              <!--数据全部加载完毕显示-->
+              <el-result v-show="noData" icon="success" title="已经全部加载完啦！"></el-result>
             </transition-group>
           </ul>
         </el-col>
@@ -62,63 +63,48 @@ export default {
   data() {
     return {
       articles: [],
-
-
-      loading: false,
+      // 全部加载完了
       noData: false,
-      //分页数据
-      innerPage: {
-        page: 1,
-        pageSize: 5,
-      },
-      tag_name: '41',
-      params: {
-        keyword: "",
-        likes: "", // 是否是热门文章
-        state: 1, // 文章发布状态 => 0 草稿，1 已发布,'' 代表所有文章
-        tag_id: '',
-        category_id: '',
-        pageNum: 1,
-        pageSize: 10,
-      },
-
-      title: '文章'
+      // 分页数据
+      page: 1,
+      size: 10,
+      // 浏览器tab标题
+      title: '文章',
     }
   },
+  // 初始加载文章
   created() {
-    this.getAllArticles()
+    this.getArticles(this.page, this.size)
   },
-  methods: {
-    load() {
-      this.getAllArticles()
-    },
-    view(id) {
-      this.$router.push({path: `/view/${id}`})
-    },
-    getAllArticles() {
-      let that = this
-      that.loading = true
 
-      axios.get("/api/articles/getArticleListByPageAndSize?page=1&pageSize=10").then(data => {
+  methods: {
+    //滚动加载文章
+    scrollLoadArticle() {
+      if (!this.noData) {
+        this.page += 1
+        this.getArticles(this.page, this.size)
+      }
+    },
+
+    getArticles(page, size) {
+      axios.get("/api/articles/getArticleListByPageAndSize?page=" + page + "&pageSize=" + size).then(data => {
         // data.data是全部json数据
         let newArticles = data.data.data
 
         if (newArticles && newArticles.length > 0) {
-          that.innerPage.page += 1
-          that.articles = that.articles.concat(newArticles)
+          this.articles = this.articles.concat(newArticles)
           console.log(newArticles)
         } else {
-          that.noData = true
+          this.noData = true
         }
-
       }).catch(error => {
         if (error !== 'error') {
-          that.$message({type: 'error', message: '文章加载失败!', showClose: true})
+          this.$message({type: 'error', message: '文章加载失败!', showClose: true})
         }
       }).finally(() => {
-        that.loading = false
       })
-    }
+    },
+
   },
 
 }
@@ -127,6 +113,8 @@ export default {
 <style lang="less" scoped>
 .left {
   .articles-list {
+    //需加入高度，否则无限滚动会一直触发load事件
+    height: 100%;
     margin: 0;
     padding: 0;
     list-style: none;

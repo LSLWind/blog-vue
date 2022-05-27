@@ -13,7 +13,7 @@ import {router} from './router'
 //挂载echart图表
 // app.config.globalProperties.$echarts = echarts
 
-//引入v-md-editor
+//引入v-md-editor 编辑与预览组件
 import VMdPreview from '@kangc/v-md-editor/lib/preview';
 import '@kangc/v-md-editor/lib/style/preview.css';
 import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
@@ -28,7 +28,6 @@ import hljs from 'highlight.js';
 VMdEditor.use(githubTheme, {
     Hljs: hljs,
 });
-
 
 VMdPreview.use(githubTheme, {
     Hljs: hljs,

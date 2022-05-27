@@ -1,4 +1,5 @@
 <template>
+  <!--echarts 统计信息-->
   <div id="main" style='height: 500px'></div>
 </template>
 
@@ -14,7 +15,7 @@ export default {
       // 创建图标
       myChart.setOption({
         title: {
-          text: 'ECharts 入门示例'
+          text: '数据统计'
         },
         tooltip: {},
         xAxis: {
@@ -23,13 +24,17 @@ export default {
         yAxis: {},
         series: [
           {
-            name: '销量',
+            name: '文章数',
             type: 'bar',
             data: [5, 20, 36, 10, 10, 20]
           }
         ]
       })
     })
+  },
+
+  methods:{
+
   }
 };
 </script>

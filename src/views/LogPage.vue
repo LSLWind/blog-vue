@@ -14,7 +14,7 @@
             <el-row :gutter="20">
               <!--侧边导航-->
               <el-col :span="6">
-                <NavAside/>
+                无
               </el-col>
               <!-- 日志-->
               <el-col :span="9">
@@ -67,12 +67,11 @@ import {getCurrentDate} from "@/utils/time"
 
 //增加日志弹出框
 import {ElMessageBox, ElMessage} from 'element-plus'
-import NavAside from "@/components/NavAside";
 import DateCalendar from "@/components/utils/DateCalendar";
 
 export default {
   name: "LogPage",
-  components: {DateCalendar, NavAside},
+  components: {DateCalendar},
   // setup返回的数据与函数可以直接在模板中使用
   data() {
     return {
